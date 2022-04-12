@@ -11,6 +11,7 @@ public class GestorCoche {
 
 	private DaoCoche daoCoche = new DaoCocheMySQL();
 	List<Coche> listaCoches = listarCoches();
+	private CochesToPdf ctp = new CochesToPdf();
 
 	/**
 	 * Metodo que da de alta un coche en base de datos. La longitud de la matricula
@@ -128,4 +129,9 @@ public class GestorCoche {
 		List<Coche> listaCoches = daoCoche.buscarPorModelo(modelo);
 		return listaCoches;
 	}
+	
+	 public void generarFicheroPdf() throws Exception{
+		 ctp.generarFichero(listarCoches());
+	 }
+	
 }

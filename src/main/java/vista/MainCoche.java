@@ -11,21 +11,13 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.google.gson.Gson;
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Chunk;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
 
 import modelo.entidad.Coche;
 import modelo.negocio.GestorCoche;
 
 public class MainCoche {
 
-	public static void main(String[] args) throws DocumentException, IOException {
+	public static void main(String[] args) throws IOException {
 		System.out.println("Bienvenido a la base de datos del Concesionario Pando");
 		boolean salir = false;
 		Scanner sc = new Scanner(System.in);
@@ -190,22 +182,14 @@ public class MainCoche {
 
 				break;
 			case 10:
-				List<Coche> lista_Coches = gc.listarCoches();
-				Document document = new Document();
-				PdfWriter.getInstance(document, new FileOutputStream("coches.pdf"));
 
-				document.open();
-				Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
-				Chunk chunk = new Chunk("Peugeot, ", font);
-				Chunk chunk2 = new Chunk("Renault, ", font);
-				Chunk chunk3 = new Chunk("Ferrari.", font);
-				document.add(chunk);
-				document.add(chunk2);
-				document.add(chunk3);
-				System.out.println("Coches exportados correctamente\n");
+				try {
+					gc.generarFicheroPdf();
+					System.out.println("Se ha creado el fichero satisfactoriamente");
+				} catch (Exception e) {
+					System.out.println("Ha ocurrido un error generando el fichero");
+				}
 
-				document.close();
-				
 				break;
 			case 0:
 				salir = true;
